@@ -33,8 +33,9 @@ def generate_grade() -> int:
     Returns:
         A random integer between 0 and 100
     """
+    return random.randint(0,100)
+
     
-    pass # REMOVE
 
 def generate_grades() -> list[int]:
     """ Generate a list of grades (3 MARKS)
@@ -43,8 +44,14 @@ def generate_grades() -> list[int]:
     Returns:
         A list of 7 random grades, created by calling the generate_grade() function seven times in a loop
     """
-    
-    pass # REMOVE
+    grades = []
+
+    for grade in range(7):
+        grade = random.randint(0,100)
+        grades.append(grade)
+    return grades
+
+  
 
 def get_menu() -> list[tuple[int, str]]:
     """ Generate a menu for the user (4 MARKS)
@@ -52,13 +59,18 @@ def get_menu() -> list[tuple[int, str]]:
         None
     Returns:
         An enumerated list of strings, 1-based (i.e. the op)
+
     """
+    
+
 
     # create a list of 5 strings: 'List Grades', 'Check Average', 'Check Status', 'Change Grade', 'Exit'
+    menu = ["List Grades", "Check Average","Check Status", "Change Grade", "Exit"]
     
     # enumerate (starting at 1) and return the list
+    return list(enumerate(menu, 1))
     
-    pass # REMOVE
+   
 
 def validate_choice(choice: int) -> int:
     """ Validate the user's choice
@@ -69,8 +81,13 @@ def validate_choice(choice: int) -> int:
     """
     
     # if choice is between 1 and 5, return the choice, otherwise return 0
+    choice = random.randint(0,5)
     
-    pass # REMOVE
+    
+    if choice in range(1,5):
+        return True
+    else: False
+    return choice 
 
 def get_average(grades: list[int]) -> int | float:
     """ Get the average of a list of grades

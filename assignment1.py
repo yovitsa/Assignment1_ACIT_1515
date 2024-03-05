@@ -61,11 +61,11 @@ def get_menu() -> list[tuple[int, str]]:
         An enumerated list of strings, 1-based (i.e. the op)
 
     """
-    
+    menu = [(1, "List Grades"),(2, "Check Average"),(3, "Check Status"), (4, "Change Grade"), (5, "Exit")]
 
 
     # create a list of 5 strings: 'List Grades', 'Check Average', 'Check Status', 'Change Grade', 'Exit'
-    menu = ["List Grades", "Check Average","Check Status", "Change Grade", "Exit"]
+    
     
     # enumerate (starting at 1) and return the list
     return list(enumerate(menu, 1))
@@ -79,15 +79,18 @@ def validate_choice(choice: int) -> int:
     Returns:
         A number (between 0 and 5)
     """
+
     
     # if choice is between 1 and 5, return the choice, otherwise return 0
-    choice = random.randint(0,5)
     
+    if choice >= 1 and choice <= 5:
+        return choice
     
-    if choice in range(1,5):
-        return True
-    else: False
-    return choice 
+    # if choice in range(1,6):
+    #     return choice 
+    # else: 
+    #     return 0
+    
 
 def get_average(grades: list[int]) -> int | float:
     """ Get the average of a list of grades
@@ -96,8 +99,19 @@ def get_average(grades: list[int]) -> int | float:
     Returns:
         The mean (average) of the list
     """
+    
+    if not grades:
+        return 0.0
+    
+    grades_total = sum(grades)
+    
+    grades_number = len(grades)
 
-    pass # REMOVE
+    average_grade = grades_total / grades_number
+
+    return average_grade
+
+    
 
 def get_status(grades: list[int]) -> bool:
     """ Get the passing status, based on the average of grades
@@ -107,10 +121,18 @@ def get_status(grades: list[int]) -> bool:
         True if average is greater than or equal to 50, otherwise False
     """
 
+    
     # call the get_average() function and check if average is greater than or equal to 50
+    average_grade = get_average(grades)
+
+    if average_grade >= 50:
+        return True
+    else:
+        False
+
     # if so, return True, otherwise return False
     
-    pass # REMOVE
+    
     
 def change_grade(grades: list[int], grade: int, new_value: int) -> list[int]:
     """ Change a grade to a new valid value
@@ -121,53 +143,69 @@ def change_grade(grades: list[int], grade: int, new_value: int) -> list[int]:
     Returns:
         The updated list of integers
     """        
-        
+    
     # if the new value is valid, silently (no print() statements) update the grade and return the list
-
+    if  0 <= new_value <= 100:
+        if 1 <= grade <= len(grades):
+            grades[grade - 1] = new_value
     # if the new grade is not valid, silently return the list without updating the grade
-
-    pass # REMOVE     
-
+    return grades
+   
+        
 if __name__ == "__main__":
     # call the generate_grades() function and store the result in variable
+    grades = generate_grades()  # Generate initial list of grades
 
     while True:
-        for value in get_menu():
-            print(*value, sep=". ")
+        print("\nMenu:")
+        for number, option in get_menu():
+            print(f"{number}. {option[1]}")  # Display menu options correctly
 
-        choice = validate_choice(int(input('Please enter a choice: ')))
-
-        match choice:
-            case 0: # 0 must be returned by validate_choice() if the input is invalid
-                print('Please choose a number between 1 and 5')
-            case 1:
-                # print the grades, all grades on one line
-                pass # REMOVE
-            case 2:
-                # call the get_average() function and print the average, rounded to two decimal places
-                pass # REMOVE
-            case 3:
-                # call the get_status() function and store the returned value in a variable
-
-                # if passing, print a message to the user indicating they are passing the course
-                # otherwise, print a (supportive?) message to the user indicating they are not yet passing
-                
-                pass # REMOVE
-            case 4:
-                # enumerate and print the grades list, one grade per line
-
-                # ask the user which grade (1 through 7) they want to update and store the result in a variable
-
-                # ask the user for a new value and store the result in a variable
-
-                # call the change_grade() function and pass in 
-                # a) the list of grades, 
-                # b) the grade to change, and 
-                # c) the new value
-                # store the returned list back into the same variable you created above when calling generate_grades()
+        user_input = input('Please choose an option from the menu: ')
+        if user_input.isdigit():  # Check if input is a digit
+            choice = int(user_input)
+            choice = validate_choice(choice)  # Validate the user's choice
+        else:
+            print("Invalid input. Please enter a number.")
+            continue
+        
+        if choice == 0:
+            print('Invalid choice. Please choose a number between 1 and 5.')
+            continue
+        
+        if choice == 1:
+            print(f'Your grades are: {grades}')
+        
+        elif choice == 2:
+            average_grade = get_average(grades)
+            print(f"Your average grade is: {average_grade:.2f}")
+        
+        elif choice == 3:
+            status = get_status(grades)
+            if status:
+                print("Congratulations, you are passing the course!")
+            else:
+                print("Unfortunately, you will have to retake this course.")
+        
+        elif choice == 4:
+            for index, grade in enumerate(grades, 1):
+                print(f"{index}. Grade: {grade}")
+            grade_index_input = input("Which grade number would you like to change? ")
+            new_grade_input = input("Enter the new grade (0-100): ")
             
-                pass # REMOVE
-            case _:
-                # exit
-                pass # REMOVE
+            if grade_index_input.isdigit() and new_grade_input.isdigit():
+                grade_index = int(grade_index_input)
+                new_grade = int(new_grade_input)
+                
+                if 0 < grade_index <= len(grades) and 0 <= new_grade <= 100:
+                    grades = change_grade(grades, grade_index, new_grade)
+                    print("Grade updated successfully.")
+                else:
+                    print("Invalid grade number or new grade value.")
+            else:
+                print("Invalid input. Please enter valid numbers.")
+        
+        elif choice == 5:
+            print("Exiting program.")
+            break
             

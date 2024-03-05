@@ -13,23 +13,42 @@
 #     # enumerate (starting at 1) and return the list
 #     return list(enumerate(menu, 1))
 # print(get_menu())
-import random
-def validate_choice(choice: int) -> int:
-    """ Validate the user's choice
+# import random
+# def validate_choice(choice: int) -> int:
+#     """ Validate the user's choice
+#     Arguments:
+#         choice: a string representation of a number
+#     Returns:
+#         A number (between 0 and 5)
+#     """
+    
+#     # if choice is between 1 and 5, return the choice, otherwise return 0
+#     choice = random.randint(0,5)
+    
+    
+#     if choice in range(1,5):
+#         return True
+#     else: False
+#     return choice   
+
+# print(validate_choice())
+def get_menu() -> list[tuple[int, str]]:
+    """ Generate a menu for the user (4 MARKS)
     Arguments:
-        choice: a string representation of a number
+        None
     Returns:
-        A number (between 0 and 5)
+        An enumerated list of strings, 1-based (i.e. the op)
+
     """
-    
-    # if choice is between 1 and 5, return the choice, otherwise return 0
-    choice = random.randint(0,5)
-    
-    
-    if choice in range(1,5):
-        return True
-    else: False
-    return choice   
+   
 
-print(validate_choice())
 
+    # create a list of 5 strings: 'List Grades', 'Check Average', 'Check Status', 'Change Grade', 'Exit'
+    menu = [(1, "List Grades"),(2, "Check Average"),(3, "Check Status"), (4, "Change Grade"), (5, "Exit")]
+    
+    # enumerate (starting at 1) and return the list
+    
+    return list(enumerate(menu, 1))
+
+get_menu()
+   

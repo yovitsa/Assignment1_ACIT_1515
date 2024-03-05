@@ -1,3 +1,8 @@
+#Jovica Kuzmanovic
+#A01339297
+#ACIT 1515
+
+
 """
 Assignment 1: Grades Generator
 ------------------------------
@@ -153,45 +158,60 @@ def change_grade(grades: list[int], grade: int, new_value: int) -> list[int]:
    
         
 if __name__ == "__main__":
+    
     # call the generate_grades() function and store the result in variable
-    grades = generate_grades()  # Generate initial list of grades
+    grades = generate_grades() 
 
     while True:
         print("\nMenu:")
         for number, option in get_menu():
-            print(f"{number}. {option[1]}")  # Display menu options correctly
+            print(f"{number}. {option[1]}")  
 
         user_input = input('Please choose an option from the menu: ')
-        if user_input.isdigit():  # Check if input is a digit
+        if user_input.isdigit(): 
             choice = int(user_input)
-            choice = validate_choice(choice)  # Validate the user's choice
+            choice = validate_choice(choice)  
         else:
             print("Invalid input. Please enter a number.")
             continue
-        
+
+        # 0 must be returned by validate_choice() if the input is invalid
         if choice == 0:
             print('Invalid choice. Please choose a number between 1 and 5.')
             continue
-        
+        # print the grades, all grades on one line
         if choice == 1:
             print(f'Your grades are: {grades}')
-        
+        # call the get_average() function and print the average, rounded to two decimal places
         elif choice == 2:
             average_grade = get_average(grades)
             print(f"Your average grade is: {average_grade:.2f}")
-        
+        # call the get_status() function and store the returned value in a variable
+
+        # if passing, print a message to the user indicating they are passing the course
+        # otherwise, print a (supportive?) message to the user indicating they are not yet passing
+            
         elif choice == 3:
             status = get_status(grades)
             if status:
                 print("Congratulations, you are passing the course!")
             else:
                 print("Unfortunately, you will have to retake this course.")
-        
+
+        # enumerate and print the grades list, one grade per line
+        # ask the user which grade (1 through 7) they want to update and store the result in a variable
+        # ask the user for a new value and store the result in a variable
+        # call the change_grade() function and pass in 
+        # a) the list of grades, 
+        # b) the grade to change, and 
+        # c) the new value
+        # store the returned list back into the same variable you created above when calling generate_grades()
+                
         elif choice == 4:
             for index, grade in enumerate(grades, 1):
                 print(f"{index}. Grade: {grade}")
-            grade_index_input = input("Which grade number would you like to change? ")
-            new_grade_input = input("Enter the new grade (0-100): ")
+            grade_index_input = input("Choose a grade taht you would like to change? ")
+            new_grade_input = input("Please enter the new grade (0-100): ")
             
             if grade_index_input.isdigit() and new_grade_input.isdigit():
                 grade_index = int(grade_index_input)
@@ -201,10 +221,11 @@ if __name__ == "__main__":
                     grades = change_grade(grades, grade_index, new_grade)
                     print("Grade updated successfully.")
                 else:
-                    print("Invalid grade number or new grade value.")
+                    print("Invalid grade number")
             else:
                 print("Invalid input. Please enter valid numbers.")
-        
+
+        # Exits the program
         elif choice == 5:
             print("Exiting program.")
             break
